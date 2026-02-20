@@ -1,8 +1,8 @@
 import { createDeck, getShuffledDeck, shuffle, getCard } from './Deck.js';
 
-const playerHandContainer = document.getElementById('your-hand');
-const playerHand = []
-const deck = []
+const playerHandContainer = document.getElementById('player-hand');
+const deck = getShuffledDeck();
+let playerHand = []
 
 function displayPlayerCards(card, container) {
   const img = document.createElement('img');
@@ -17,6 +17,7 @@ function updateCards() {
 }
 
 function startNewGame() {
+  
   playerHand = [deck.pop(), deck.pop()];
   updateCards();  
 }
