@@ -17,9 +17,9 @@ function updateCards() {
 }
 
 function startNewGame() {
-  
+
   playerHand = [deck.pop(), deck.pop()];
-  updateCards();  
+  updateCards();
 }
 
 startNewGame();

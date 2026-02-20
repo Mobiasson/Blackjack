@@ -13,7 +13,7 @@ function getRankName(rank) {
 
 function getImagePath(suit, rank) {
   const rankName = getRankName(rank).toLowerCase();
-  return `assets/images/${rankName}_of_${suit}.png`;
+  return `assets/images/cards/${rankName}_of_${suit}.png`;
 }
 
 function getRankValue(rank) {
