@@ -1,0 +1,29 @@
+body {
+  font-size: 12px;
+}
+
+#player-hand {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+#player-hand img {
+  width:  clamp(90px, 18vw, 160px);   
+  height: auto;                         
+  border-radius: 8px;
+  margin: 15px;
+}
+
+#dealer-hand {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+#dealer-hand img {
+  width:  clamp(90px, 18vw, 160px);   
+  height: auto;                         
+  border-radius: 8px;
+  margin: 15px;
+}
