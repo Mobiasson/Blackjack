@@ -1,29 +1,35 @@
 body {
-  font-size: 12px;
+  background-color: #0e3d2f;
+  color: white;
 }
 
 #player-hand {
-display: flex;
-justify-content: center;
-align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #player-hand img {
-  width:  clamp(90px, 18vw, 160px);   
-  height: auto;                         
+  width: clamp(90px, 18vw, 160px);
+  height: auto;
   border-radius: 8px;
   margin: 15px;
 }
 
 #dealer-hand {
-display: flex;
-justify-content: center;
-align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #dealer-hand img {
-  width:  clamp(90px, 18vw, 160px);   
-  height: auto;                         
+  width: clamp(90px, 18vw, 160px);
+  height: auto;
   border-radius: 8px;
   margin: 15px;
+}
+
+#hit-button, #stay-button {
+  width: 50px;
+  height: auto;
 }
