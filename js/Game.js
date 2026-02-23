@@ -13,12 +13,18 @@ function displayPlayerCards(card, container) {
   container.appendChild(img);
 }
 
-function displayHandValue(hand) {
+function calculateCards(hand) {
   let standing = 0;
   hand.forEach(card => {
     standing += card.value;
   })
   return standing;
+}
+
+function checkWinnerOrLoser() {
+  const playerScore = calculateCards(playerHand);
+  const message = document.getElementById('message');
+  message.textContent = playerScore > 21 ? 'You lose' : playerScore === 21 ? 'You won!' : '';
 }
 
 function updateDisplay() {
@@ -28,14 +34,14 @@ function updateDisplay() {
   playerHand.forEach(card => displayPlayerCards(card, playerHandContainer));
   const playerValue = document.getElementById('player-standing');
   const dealerValue = document.getElementById('dealer-standing');
-  playerValue.textContent = displayHandValue(playerHand);
-  dealerValue.textContent = displayHandValue(dealerHand);
-} 
+  playerValue.textContent = calculateCards(playerHand);
+  dealerValue.textContent = calculateCards(dealerHand);
+  checkWinnerOrLoser();
+}
 
 function startNewGame() {
   playerHand = [deck.pop(), deck.pop()];
   dealerHand = [deck.pop(), deck.pop()];
-  console.log(playerHand);
   updateDisplay();
 }
 
