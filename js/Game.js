@@ -6,7 +6,6 @@ const hitButton = document.getElementById('hit-button');
 const deck = getShuffledDeck();
 let playerHand = [];
 let dealerHand = [];
-let playerStanding = 0;
 
 function displayPlayerCards(card, container) {
   const img = document.createElement('img');
@@ -14,24 +13,35 @@ function displayPlayerCards(card, container) {
   container.appendChild(img);
 }
 
-function updateCards() {
+function displayHandValue(hand) {
+  let standing = 0;
+  hand.forEach(card => {
+    standing += card.value;
+  })
+  return standing;
+}
+
+function updateDisplay() {
   playerHandContainer.innerHTML = '';
   dealerHandContainer.innerHTML = '';
   dealerHand.forEach(card => displayPlayerCards(card, dealerHandContainer));
   playerHand.forEach(card => displayPlayerCards(card, playerHandContainer));
+  const playerValue = document.getElementById('player-standing');
+  playerValue.textContent = displayHandValue(playerHand);
 
 }
 
 function startNewGame() {
   playerHand = [deck.pop(), deck.pop()];
   dealerHand = [deck.pop(), deck.pop()];
-  updateCards();
+  console.log(playerHand);
+  updateDisplay();
 }
 
 hitButton.onclick = function() {
   let newCard = deck.pop();
   playerHand.push(newCard);
-  updateCards();
+  updateDisplay();
 }
 
 startNewGame();
