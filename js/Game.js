@@ -27,9 +27,10 @@ function updateDisplay() {
   dealerHand.forEach(card => displayPlayerCards(card, dealerHandContainer));
   playerHand.forEach(card => displayPlayerCards(card, playerHandContainer));
   const playerValue = document.getElementById('player-standing');
+  const dealerValue = document.getElementById('dealer-standing');
   playerValue.textContent = displayHandValue(playerHand);
-
-}
+  dealerValue.textContent = displayHandValue(dealerHand);
+} 
 
 function startNewGame() {
   playerHand = [deck.pop(), deck.pop()];
