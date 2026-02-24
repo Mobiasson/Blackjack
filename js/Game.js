@@ -1,9 +1,10 @@
-import { createDeck, getShuffledDeck, shuffle, getCard } from './Deck.js';
+import { getShuffledDeck } from './Deck.js';
 
 const playerHandContainer = document.getElementById('player-hand');
 const dealerHandContainer = document.getElementById('dealer-hand');
 const hitButton = document.getElementById('hit-button');
 const deck = getShuffledDeck();
+let isRoundActive = false;
 let playerHand = [];
 let dealerHand = [];
 
@@ -24,7 +25,9 @@ function calculateCards(hand) {
 function checkWinnerOrLoser() {
   const playerScore = calculateCards(playerHand);
   const message = document.getElementById('message');
-  message.textContent = playerScore > 21 ? 'You lose' : playerScore === 21 ? 'You won!' : '';
+  message.textContent = playerScore > 21 ? 'You lose' : playerScore === 21 ? 'Blackjack' : '';
+  if (playerScore > 21) hitButton.disabled = true;
+
 }
 
 function updateDisplay() {
@@ -40,9 +43,12 @@ function updateDisplay() {
 }
 
 function startNewGame() {
+  isRoundActive = true;
   playerHand = [deck.pop(), deck.pop()];
   dealerHand = [deck.pop(), deck.pop()];
-  updateDisplay();
+  if (isRoundActive) {
+    updateDisplay();
+  }
 }
 
 hitButton.onclick = function() {
