@@ -3,6 +3,7 @@ import { getShuffledDeck } from './Deck.js';
 const playerHandContainer = document.getElementById('player-hand');
 const dealerHandContainer = document.getElementById('dealer-hand');
 const hitButton = document.getElementById('hit-button');
+const stayButton = document.getElementById('stay-button');
 const deck = getShuffledDeck();
 let isRoundActive = false;
 let playerHand = [];
@@ -24,10 +25,30 @@ function calculateCards(hand) {
 
 function checkWinnerOrLoser() {
   const playerScore = calculateCards(playerHand);
+  const dealerScore = calculateCards(dealerHand);
   const message = document.getElementById('message');
-  message.textContent = playerScore > 21 ? 'You lose' : playerScore === 21 ? 'Blackjack' : '';
-  if (playerScore > 21) hitButton.disabled = true;
 
+  if (playerScore > 21) {
+    hitButton.disabled = true;
+    stayButton.disabled = true;
+    message.textContent = "Player busts! Dealer wins!";
+  } else if (dealerScore > 21) {
+    hitButton.disabled = true;
+    stayButton.disabled = true;
+    message.textContent = "Dealer busts! Player wins!";
+  } else if (playerScore > dealerScore) {
+    hitButton.disabled = true;
+    stayButton.disabled = true;
+    message.textContent = "Player wins!";
+  } else if (dealerScore > playerScore) {
+    hitButton.disabled = true;
+    stayButton.disabled = true;
+    message.textContent = "Dealer wins!";
+  } else {
+    hitButton.disabled = true;
+    stayButton.disabled = true;
+    message.textContent = "Push! It's a tie!";
+  }
 }
 
 function updateDisplay() {
@@ -39,7 +60,6 @@ function updateDisplay() {
   const dealerValue = document.getElementById('dealer-standing');
   playerValue.textContent = calculateCards(playerHand);
   dealerValue.textContent = calculateCards(dealerHand);
-  checkWinnerOrLoser();
 }
 
 function startNewGame() {
@@ -52,9 +72,20 @@ function startNewGame() {
 }
 
 hitButton.onclick = function() {
-  let newCard = deck.pop();
-  playerHand.push(newCard);
+  playerHand.push(deck.pop());
   updateDisplay();
+
+  const playerScore = calculateCards(playerHand);
+  if (playerScore > 21) {
+    checkWinnerOrLoser();
+  }
 }
 
+stayButton.onclick = function() {
+  while (calculateCards(dealerHand) < 17) {
+    dealerHand.push(deck.pop());
+  }
+  updateDisplay();
+  checkWinnerOrLoser();
+}
 startNewGame();
