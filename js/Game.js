@@ -4,8 +4,11 @@ const playerHandContainer = document.getElementById('player-hand');
 const dealerHandContainer = document.getElementById('dealer-hand');
 const hitButton = document.getElementById('hit-button');
 const stayButton = document.getElementById('stay-button');
+const dealButton = document.getElementById('deal-button');
 const deck = getShuffledDeck();
 let isRoundActive = false;
+let credits = 1000;
+let currentBet = 0;
 let playerHand = [];
 let dealerHand = [];
 
@@ -71,6 +74,10 @@ function startNewGame() {
   }
 }
 
+function updateCredits() {
+  document.getElementById('credits-amount').textContent = credits;
+}
+
 hitButton.onclick = function() {
   playerHand.push(deck.pop());
   updateDisplay();
@@ -88,4 +95,14 @@ stayButton.onclick = function() {
   updateDisplay();
   checkWinnerOrLoser();
 }
+
+dealButton.onclick = function() {
+  currentBet = parseInt(document.getElementById('bet-input').value);
+  if (currentBet > credits) {
+    message.textContent = "Unsufficient credits";
+    message.co
+    return;
+  }
+}
+
 startNewGame();
