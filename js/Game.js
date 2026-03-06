@@ -100,9 +100,10 @@ dealButton.onclick = function() {
   currentBet = parseInt(document.getElementById('bet-input').value);
   if (currentBet > credits) {
     message.textContent = "Unsufficient credits";
-    message.co
     return;
   }
+  credits -= currentBet;
+  updateCredits();
 }
 
 startNewGame();
