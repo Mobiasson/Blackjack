@@ -8,6 +8,7 @@ const dealButton = document.getElementById('deal-button');
 const deck = getShuffledDeck();
 let isRoundActive = false;
 let credits = 1000;
+let pot = 0;
 let currentBet = 0;
 let playerHand = [];
 let dealerHand = [];
@@ -78,6 +79,13 @@ function updateCredits() {
   document.getElementById('credits-amount').textContent = credits;
 }
 
+function updatePot() {
+  let potElement = document.getElementById('pot');
+  let current = parseFloat(potElement.textContent) || 0;
+  let newTotal = current + currentBet;
+  potElement.textContent = `Pot: $${newTotal}`
+}
+
 hitButton.onclick = function() {
   playerHand.push(deck.pop());
   updateDisplay();
@@ -104,6 +112,7 @@ dealButton.onclick = function() {
   }
   credits -= currentBet;
   updateCredits();
+  updatePot();
 }
 
 startNewGame();
