@@ -1,4 +1,9 @@
 import { getShuffledDeck } from './Deck.js';
+import { Profile } from './Profiles.js';
+
+const profile = Profile;
+
+profile.getProfile();
 
 const playerHandContainer = document.getElementById('player-hand');
 const dealerHandContainer = document.getElementById('dealer-hand');
@@ -7,9 +12,9 @@ const stayButton = document.getElementById('stay-button');
 const dealButton = document.getElementById('deal-button');
 const deck = getShuffledDeck();
 let isRoundActive = false;
-let credits = 1000;
-let pot = 0;
+let credits = profile.currentProfile.credits;
 let currentBet = 0;
+let potValue = 0;
 let playerHand = [];
 let dealerHand = [];
 
@@ -77,13 +82,13 @@ function startNewGame() {
 
 function updateCredits() {
   document.getElementById('credits-amount').textContent = credits;
+  profile.setCredits(credits);
 }
 
 function updatePot() {
-  let potElement = document.getElementById('pot');
-  let current = parseFloat(potElement.textContent) || 0;
-  let newTotal = current + currentBet;
-  potElement.textContent = `Pot: $${newTotal}`
+  potValue += currentBet;
+  const potElement = document.getElementById('pot');
+  potElement.textContent = `Pot: $${potValue}`;
 }
 
 hitButton.onclick = function() {
