@@ -10,6 +10,8 @@ const dealerHandContainer = document.getElementById('dealer-hand');
 const hitButton = document.getElementById('hit-button');
 const stayButton = document.getElementById('stay-button');
 const dealButton = document.getElementById('deal-button');
+const playButton = document.getElementById('play-button');
+playButton.style.visibility = "hidden";
 const deck = getShuffledDeck();
 let isRoundActive = false;
 let credits = profile.currentProfile.credits;
@@ -35,29 +37,19 @@ function calculateCards(hand) {
 function checkWinnerOrLoser() {
   const playerScore = calculateCards(playerHand);
   const dealerScore = calculateCards(dealerHand);
-  const message = document.getElementById('message');
+  if (playerScore > 21) endRound("Player busts! Dealer wins!");
+  else if (dealerScore > 21) endRound("Dealer busts! Player wins!");
+  else if (playerScore > dealerScore) endRound("Player wins!");
+  else if (dealerScore > playerScore) endRound("Dealer wins!");
+  else endRound("Push! It's a tie!");
+}
 
-  if (playerScore > 21) {
-    hitButton.disabled = true;
-    stayButton.disabled = true;
-    message.textContent = "Player busts! Dealer wins!";
-  } else if (dealerScore > 21) {
-    hitButton.disabled = true;
-    stayButton.disabled = true;
-    message.textContent = "Dealer busts! Player wins!";
-  } else if (playerScore > dealerScore) {
-    hitButton.disabled = true;
-    stayButton.disabled = true;
-    message.textContent = "Player wins!";
-  } else if (dealerScore > playerScore) {
-    hitButton.disabled = true;
-    stayButton.disabled = true;
-    message.textContent = "Dealer wins!";
-  } else {
-    hitButton.disabled = true;
-    stayButton.disabled = true;
-    message.textContent = "Push! It's a tie!";
-  }
+function endRound(message) {
+  hitButton.disabled = true;
+  stayButton.disabled = true;
+  isRoundActive = false;
+  document.getElementById('message').textContent = message;
+  updateDisplay();
 }
 
 function updateDisplay() {
@@ -69,6 +61,9 @@ function updateDisplay() {
   const dealerValue = document.getElementById('dealer-standing');
   playerValue.textContent = calculateCards(playerHand);
   dealerValue.textContent = calculateCards(dealerHand);
+  if (!isRoundActive) {
+    playButton.style.visibility = "visible";
+  }
 }
 
 function startNewGame() {
@@ -91,17 +86,16 @@ function updatePot() {
   potElement.textContent = `Pot: $${potValue}`;
 }
 
-hitButton.onclick = function() {
+hitButton.onclick = function () {
   playerHand.push(deck.pop());
   updateDisplay();
-
   const playerScore = calculateCards(playerHand);
   if (playerScore > 21) {
     checkWinnerOrLoser();
   }
 }
 
-stayButton.onclick = function() {
+stayButton.onclick = function () {
   while (calculateCards(dealerHand) < 17) {
     dealerHand.push(deck.pop());
   }
@@ -109,7 +103,7 @@ stayButton.onclick = function() {
   checkWinnerOrLoser();
 }
 
-dealButton.onclick = function() {
+dealButton.onclick = function () {
   currentBet = parseInt(document.getElementById('bet-input').value);
   if (currentBet > credits) {
     message.textContent = "Unsufficient credits";
@@ -120,4 +114,7 @@ dealButton.onclick = function() {
   updatePot();
 }
 
+playButton.onclick = function () {
+
+}
 startNewGame();
