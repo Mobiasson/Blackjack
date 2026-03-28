@@ -68,6 +68,8 @@ function updateDisplay() {
 
 function startNewGame() {
   isRoundActive = true;
+  hitButton.disabled = false;
+  stayButton.disabled = false;
   playerHand = [deck.pop(), deck.pop()];
   dealerHand = [deck.pop(), deck.pop()];
   if (isRoundActive) {
@@ -108,13 +110,16 @@ dealButton.onclick = function () {
   if (currentBet > credits) {
     message.textContent = "Unsufficient credits";
     return;
+  } else {
+    credits -= currentBet;
+    updateCredits();
+    updatePot();
   }
-  credits -= currentBet;
-  updateCredits();
-  updatePot();
 }
 
 playButton.onclick = function () {
-
+  startNewGame();
+  playButton.style.visibility = "hidden";
 }
+
 startNewGame();
